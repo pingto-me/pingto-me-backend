@@ -6,6 +6,7 @@ export class CardTemplate {
   templateType: CardTemplateType;
   eventId?: string;
   ownerId: string;
+  readonly: boolean;
 
   createdAt?: Date;
   updatedAt?: Date;

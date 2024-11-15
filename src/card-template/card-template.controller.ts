@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { CardTemplateService } from './card-template.service';
 import { CreateCardTemplateDto } from './dto/create-card-template.dto';
@@ -27,7 +28,7 @@ export class CardTemplateController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cardTemplateService.findOne(+id);
+    return this.cardTemplateService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +36,12 @@ export class CardTemplateController {
     @Param('id') id: string,
     @Body() updateCardTemplateDto: UpdateCardTemplateDto,
   ) {
-    return this.cardTemplateService.update(+id, updateCardTemplateDto);
+    return this.cardTemplateService.update(id, updateCardTemplateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cardTemplateService.remove(+id);
+  remove(@Param('id') id: string, @Req() req: any) {
+    const userId = req.user.id;
+    return this.cardTemplateService.remove(id, userId);
   }
 }
