@@ -1,4 +1,4 @@
 export enum UserLinkType {
-  SKILL = 'SKILL',
-  WEB = 'WEB',
+  SKILL = 'skill',
+  SOCIAL = 'social',
 }

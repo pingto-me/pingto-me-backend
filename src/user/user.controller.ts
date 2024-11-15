@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Logger,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { UserListDto } from './dto/user-list.dto';
@@ -9,7 +17,7 @@ import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
 import { UpdateUserProfile } from './dto/update-profile.dto';
 import { User } from 'src/utils/decor/user.decorator';
 import { UserEntity } from './entities/user.entity';
-
+const logger = new Logger('UserController');
 @ApiTags('User')
 @Controller('users')
 export class UserController {
@@ -24,7 +32,8 @@ export class UserController {
 
   @Auth()
   @Post('update-profile')
-  async updateProfile(@Req() req: any, @Body() body: UpdateUserProfile) {
+  async updateProfile(@Body() body: UpdateUserProfile, @Req() req: any) {
+    logger.log('updateProfile body', body);
     return this.userService.updateProfile(req.user.id, body);
   }
 
@@ -38,14 +47,5 @@ export class UserController {
   @Get('me')
   async me(@Req() req: any) {
     return this.userService.getUserById(req.user.id);
-  }
-
-  @Auth()
-  @Post('me/account-raw-data')
-  async saveAccountRawData(
-    @Req() req: any,
-    @Body() body: SaveAccountRawDataDto,
-  ) {
-    return this.userService.saveAccountRawDataByUserId(req.user.id, body);
   }
 }

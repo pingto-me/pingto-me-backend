@@ -12,13 +12,29 @@ import { UserLinkService } from './user-link.service';
 import { CreateUserLinkDto } from './dto/create-user-link.dto';
 import { UpdateUserLinkDto } from './dto/update-user-link.dto';
 import { Auth } from 'src/auth/decorator/auth.decorator';
+import { SocialPlatformProvider } from 'src/common/provider/social-platform-provider';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { User } from 'src/utils/decor/user.decorator';
 
 @Controller('user-links')
 export class UserLinkController {
-  constructor(private readonly userLinkService: UserLinkService) {}
+  constructor(
+    private readonly userLinkService: UserLinkService,
+    private readonly socialPlatformProvider: SocialPlatformProvider,
+  ) {}
+
+  @Get('platforms')
+  async getSocialPlatform() {
+    return this.socialPlatformProvider.getSocialPlatforms();
+  }
+
   @Auth()
   @Post()
-  create(@Body() createUserLinkDto: CreateUserLinkDto) {
+  create(
+    @Body() createUserLinkDto: CreateUserLinkDto,
+    @User() user: UserEntity,
+  ) {
+    createUserLinkDto.userId = user.id;
     return this.userLinkService.create(createUserLinkDto);
   }
 

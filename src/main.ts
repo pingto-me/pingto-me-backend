@@ -52,12 +52,12 @@ export const createNestServer = async (expressInstance: express.Express) => {
   );
   app.useBodyParser('json', { limit: '50mb' });
   // Validation
-  app.useGlobalPipes(
+  /* app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
     }),
-  );
+  );*/
 
   const configService = app.get(ConfigService);
   const nestConfig = configService.get<NestConfig>('nest');

@@ -1,3 +1,5 @@
+import { IsOptional } from 'class-validator';
+
 export class UpdateUserProfile {
   title?: string;
   firstName?: string;
@@ -6,4 +8,6 @@ export class UpdateUserProfile {
   bannerImage: string;
   company?: string;
   position?: string;
+  @IsOptional()
+  bio?: string;
 }

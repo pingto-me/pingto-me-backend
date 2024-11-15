@@ -20,6 +20,8 @@ import { EventModule } from './event/event.module';
 import { CardTemplateModule } from './card-template/card-template.module';
 import { OrderModule } from './order/order.module';
 import { UserLinkModule } from './user-link/user-link.module';
+import { PublicController } from './public/public.controller';
+import { SocialPlatformProvider } from './common/provider/social-platform-provider';
 
 @Module({
   imports: [
@@ -32,7 +34,7 @@ import { UserLinkModule } from './user-link/user-link.module';
     OrderModule,
     UserLinkModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController, PublicController],
   providers: [
     AppService,
     AuthService,
@@ -43,6 +45,7 @@ import { UserLinkModule } from './user-link/user-link.module';
     FirebaseService,
     UserService,
     DataService,
+    SocialPlatformProvider,
   ],
 })
 export class AppModule {}

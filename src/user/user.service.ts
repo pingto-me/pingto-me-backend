@@ -185,10 +185,16 @@ export class UserService {
   }
 
   async updateProfile(id: any, body: UpdateUserProfile) {
-    // get user form firebase database by id
-    const user = await db.users.get(db.users.id(id));
-    // save user data
-    db.users.set(db.users.id(id), { ...user.data, ...body });
-    return user;
+    const userSnapshot = await this.userCollection.doc(id).get();
+    if (!userSnapshot.exists) {
+      throw new NotFoundException(`User not found`);
+    }
+    const userEntity = userSnapshot.data() as UserEntity;
+    if (userEntity.id !== id) {
+      throw new NotFoundException(`User not found or unauthorized`);
+    }
+    await this.userCollection.doc(id).update({ ...body });
+    const updatedUserSnapshot = await this.userCollection.doc(id).get();
+    return updatedUserSnapshot.data();
   }
 }
