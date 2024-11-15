@@ -18,7 +18,7 @@ import * as admin from 'firebase-admin';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const corsHandler = cors({ origin: true });
 
-if (process.env.FIREBASE_ENABLE == 'true') {
+if (process.env.FIREBASEX_ENABLE == 'true') {
   const serviceAccount = {
     type: 'service_account',
     project_id: process.env.FIREBASEADMIN_PROJECT_ID,

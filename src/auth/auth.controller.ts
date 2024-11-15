@@ -39,15 +39,4 @@ export class AuthController {
     const result = await this.authService.signinWithBypassPublicAddress(body);
     return result;
   }
-
-  @Get('ton/proof')
-  async getTonProof() {
-    return await this.authService.getTonProof();
-  }
-
-  @Post('ton/signin')
-  async signinWithTonWalletAddress(@Body() body: SigninTonAddressInput) {
-    const { account, proof } = body;
-    return await this.authService.signinWithTonWalletAddress(proof, account);
-  }
 }

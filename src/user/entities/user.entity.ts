@@ -6,6 +6,7 @@ import { User } from 'src/models/user.interface';
 import { ProviderDataEntity } from './provider-data.entity';
 import { BaseEntityModel } from 'src/common/models/base.entity.model';
 import { IsOptional } from 'class-validator';
+import { WalletType } from 'src/utils/interface/wallet-type';
 
 export class UserEntity extends BaseEntityModel implements User {
   @ApiProperty({
@@ -16,6 +17,7 @@ export class UserEntity extends BaseEntityModel implements User {
   })
   provider?: Provider;
 
+  walletType?: WalletType;
   @ApiProperty({
     type: String,
     description: 'Email',

@@ -11,6 +11,7 @@ import { UuidService } from 'src/utils/uuid/uuid.service';
 import { UserListDto } from './dto/user-list.dto';
 import { DataService } from 'src/utils/typesaurus/data.service';
 import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
+import { WalletType } from 'src/utils/interface/wallet-type';
 
 @Injectable()
 export class UserService {
@@ -70,7 +71,10 @@ export class UserService {
     return providerDataRef.data;
   }
 
-  async getUserByPublicAddress(publicAddress: string): Promise<UserEntity> {
+  async getUserByPublicAddress(
+    publicAddress: string,
+    walletType: WalletType,
+  ): Promise<UserEntity> {
     let user: UserEntity;
     const providerDatas = await db.providerDatas.query(($) =>
       $.field('walletAddress').eq(publicAddress),
@@ -90,6 +94,7 @@ export class UserService {
         id: userId,
         role: Role.USER,
         provider: Provider.WALLET,
+        walletType: walletType,
         referralCode,
         point: 0,
         createdAt: new Date(),
@@ -101,6 +106,7 @@ export class UserService {
         id: providerDataId,
         userId,
         provider: Provider.WALLET,
+        walletType,
         isVerified: true,
         walletAddress: publicAddress,
       };
