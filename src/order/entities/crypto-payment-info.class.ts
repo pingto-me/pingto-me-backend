@@ -1,8 +1,7 @@
 export class CryptoPaymentInfo {
-  isNativeCurrency: boolean;
-  contractAddress: string;
-  decimal: number;
+  isNativeCurrency = true;
+  chain: 'kub';
   amount: number;
-  currency: string;
+  currency: 'kub';
   txHash: string;
 }

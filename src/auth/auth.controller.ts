@@ -6,7 +6,6 @@ import { AuthRespondInterface } from './dto/auth-respond.interface';
 import { ValidatePublicAddressInput } from './dto/validate-public-address.input';
 import { ValidatePublicAddressRespond } from './dto/validate-public-address.respond';
 import { SigninPublicAddressInput } from './dto/signin-public-address.input';
-import { SigninTonAddressInput } from './dto/signin-ton-address.input';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth')

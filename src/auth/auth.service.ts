@@ -118,7 +118,7 @@ export class AuthService {
     const user = await db.users.get(db.users.id(userId));
 
     if (user) {
-      return user.data;
+      return user.data as UserEntity;
     } else {
       throw new ConflictException('Validate user fail');
     }

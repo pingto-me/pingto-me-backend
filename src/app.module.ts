@@ -19,6 +19,7 @@ import { CardModule } from './card/card.module';
 import { EventModule } from './event/event.module';
 import { CardTemplateModule } from './card-template/card-template.module';
 import { OrderModule } from './order/order.module';
+import { UserLinkModule } from './user-link/user-link.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { OrderModule } from './order/order.module';
     EventModule,
     CardTemplateModule,
     OrderModule,
+    UserLinkModule,
   ],
   controllers: [AppController, AuthController],
   providers: [

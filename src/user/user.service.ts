@@ -13,13 +13,34 @@ import { DataService } from 'src/utils/typesaurus/data.service';
 import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
 import { WalletType } from 'src/utils/interface/wallet-type';
 import { UpdateUserProfile } from './dto/update-profile.dto';
+import { FirebaseService } from 'src/utils/firebase/firebase.service';
 
 @Injectable()
 export class UserService {
+  private userCollection = this.firebaseService
+    .getFirestore()
+    .collection('users');
+
+  private userLinkCollection = this.firebaseService
+    .getFirestore()
+    .collection('user-links');
   constructor(
     private uuidService: UuidService,
     private dataService: DataService,
+    private firebaseService: FirebaseService,
   ) {}
+
+  async getUserProfileCard(userId: string) {
+    const userSnapshot = await this.userCollection.doc(userId).get();
+    const UserEntity = userSnapshot.data() as UserEntity;
+    // find user-link by userId and sort by order
+    const userLinkSnapshot = await this.userLinkCollection
+      .where('userId', '==', userId)
+      .orderBy('order')
+      .get();
+    const userLink = userLinkSnapshot.docs.map((doc) => doc.data());
+    return { ...UserEntity, userLink };
+  }
 
   async getUserById(userId: string): Promise<UserEntity> {
     const findUser = await db.users.get(db.users.id(userId));

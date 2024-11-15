@@ -83,6 +83,17 @@ export class UserEntity extends BaseEntityModel implements User {
 
   @ApiProperty({
     type: String,
+    description: 'Bio',
+    required: false,
+    example: 'Blockchain Developer',
+  })
+  bio?: string;
+
+  company?: string;
+  position?: string;
+
+  @ApiProperty({
+    type: String,
     description: 'Picture',
     required: false,
     example: 'http://xxx/xxx',

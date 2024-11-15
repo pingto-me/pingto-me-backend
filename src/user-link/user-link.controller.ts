@@ -13,7 +13,7 @@ import { CreateUserLinkDto } from './dto/create-user-link.dto';
 import { UpdateUserLinkDto } from './dto/update-user-link.dto';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 
-@Controller('user-link')
+@Controller('user-links')
 export class UserLinkController {
   constructor(private readonly userLinkService: UserLinkService) {}
   @Auth()

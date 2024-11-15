@@ -7,6 +7,8 @@ import { Auth } from 'src/auth/decorator/auth.decorator';
 import { Role } from 'src/models/role.enum';
 import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
 import { UpdateUserProfile } from './dto/update-profile.dto';
+import { User } from 'src/utils/decor/user.decorator';
+import { UserEntity } from './entities/user.entity';
 
 @ApiTags('User')
 @Controller('users')
@@ -24,6 +26,12 @@ export class UserController {
   @Post('update-profile')
   async updateProfile(@Req() req: any, @Body() body: UpdateUserProfile) {
     return this.userService.updateProfile(req.user.id, body);
+  }
+
+  @Auth()
+  @Get('profile-card')
+  async profileCard(@User() user: UserEntity) {
+    return this.userService.getUserProfileCard(user.id);
   }
 
   @Auth()
