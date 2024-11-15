@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as admin from 'firebase-admin';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { FirebaseService } from 'src/utils/firebase/firebase.service';
@@ -7,7 +6,7 @@ import { Event } from './entities/event.entity';
 
 @Injectable()
 export class EventService {
-  private collection = admin.firestore().collection('events');
+  private collection = this.firebaseService.getFirestore().collection('events');
   constructor(private readonly firebaseService: FirebaseService) {}
 
   async create(createEventDto: CreateEventDto) {

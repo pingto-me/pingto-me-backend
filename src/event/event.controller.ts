@@ -45,7 +45,9 @@ export class EventController {
     @Body() updateEventDto: UpdateEventDto,
   ) {
     const userId = req.user.id;
-    return this.eventService.update(id, updateEventDto);
+    updateEventDto.ownerId = userId;
+    const updatedEvent = await this.eventService.update(id, updateEventDto);
+    return updatedEvent;
   }
 
   @Delete(':id')
