@@ -12,6 +12,7 @@ import { UserListDto } from './dto/user-list.dto';
 import { DataService } from 'src/utils/typesaurus/data.service';
 import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
 import { WalletType } from 'src/utils/interface/wallet-type';
+import { UpdateUserProfile } from './dto/update-profile.dto';
 
 @Injectable()
 export class UserService {
@@ -160,5 +161,13 @@ export class UserService {
     Object.assign(query, { filterBy });
     const result = await this.dataService.list('users', query, isPagination);
     return result;
+  }
+
+  async updateProfile(id: any, body: UpdateUserProfile) {
+    // get user form firebase database by id
+    const user = await db.users.get(db.users.id(id));
+    // save user data
+    db.users.set(db.users.id(id), { ...user.data, ...body });
+    return user;
   }
 }

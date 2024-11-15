@@ -6,6 +6,7 @@ import { UserListDto } from './dto/user-list.dto';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { Role } from 'src/models/role.enum';
 import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
+import { UpdateUserProfile } from './dto/update-profile.dto';
 
 @ApiTags('User')
 @Controller('users')
@@ -17,6 +18,12 @@ export class UserController {
   async list(@Req() req: any, @Query() query: UserListDto) {
     query.authByUserId = req.user.id;
     return this.userService.list(query);
+  }
+
+  @Auth()
+  @Post('update-profile')
+  async updateProfile(@Req() req: any, @Body() body: UpdateUserProfile) {
+    return this.userService.updateProfile(req.user.id, body);
   }
 
   @Auth()

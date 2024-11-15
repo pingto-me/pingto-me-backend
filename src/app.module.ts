@@ -15,12 +15,20 @@ import { FirebaseService } from './utils/firebase/firebase.service';
 import { UserService } from './user/user.service';
 
 import { DataService } from './utils/typesaurus/data.service';
+import { CardModule } from './card/card.module';
+import { EventModule } from './event/event.module';
+import { CardTemplateModule } from './card-template/card-template.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     AuthModule,
     UserModule,
+    CardModule,
+    EventModule,
+    CardTemplateModule,
+    OrderModule,
   ],
   controllers: [AppController, AuthController],
   providers: [
