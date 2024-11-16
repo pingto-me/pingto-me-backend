@@ -5,6 +5,7 @@ import { FirebaseService } from 'src/utils/firebase/firebase.service';
 import { OrderEntity } from './entities/order.entity';
 import { CardService } from 'src/card/card.service';
 import { EventService } from 'src/event/event.service';
+import { PaymentStatus } from './entities/payment-status.enum';
 
 const logger = new Logger('OrderService');
 @Injectable()
@@ -87,6 +88,20 @@ export class OrderService {
       throw new Error('Order not found');
     }
     await orderRef.delete();
+    return order;
+  }
+
+  async updateStatusWhenSuccess(id: string) {
+    const orderRef = this.collection.doc(id);
+    const orderSnapshot = await orderRef.get();
+    if (!orderSnapshot.exists) {
+      throw new Error('Order not found');
+    }
+    const order = orderSnapshot.data() as OrderEntity;
+    order.paymentStatus = PaymentStatus.PAID;
+    order.updatedAt = new Date();
+    order.paidAt = new Date();
+    await orderRef.update({ ...order });
     return order;
   }
 }

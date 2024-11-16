@@ -29,9 +29,13 @@ export class EventService {
   }
 
   async findOne(id: string) {
-    const event = await this.collection.doc(id).get();
-    // convert event to event entity
-    return event.data() as Event;
+    const eventSnapshot = await this.collection.doc(id).get();
+
+    if (!eventSnapshot.exists) {
+      throw new Error('Event not found');
+    }
+
+    return eventSnapshot.data() as Event;
   }
 
   async findOneByIdAndUserId(eventId: string, userId: string) {

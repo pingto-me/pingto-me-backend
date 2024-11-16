@@ -13,8 +13,10 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { User } from 'src/utils/decor/user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @Auth()
+@ApiTags('Order')
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
@@ -31,6 +33,11 @@ export class OrderController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.orderService.findOne(id);
+  }
+
+  @Patch(':id/success')
+  updateStatusWhenSuccess(@Param('id') id: string) {
+    return this.orderService.updateStatusWhenSuccess(id);
   }
 
   @Patch(':id')
