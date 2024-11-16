@@ -197,4 +197,22 @@ export class UserService {
     const updatedUserSnapshot = await this.userCollection.doc(id).get();
     return updatedUserSnapshot.data();
   }
+
+  async getUserProfileByRefCode(refCode: string) {
+    const users = await db.users.query(($) =>
+      $.field('referralCode').eq(refCode),
+    );
+    if (users.length === 0) {
+      throw new NotFoundException(`User not found for this referral code`);
+    }
+    const userEntity = users[0].data as UserEntity;
+
+    // // find user-link by userId and sort by order
+    const userLinkSnapshot = await this.userLinkCollection
+      .where('userId', '==', userEntity?.id)
+      .orderBy('createdAt')
+      .get();
+    const userLink = userLinkSnapshot.docs.map((doc) => doc.data());
+    return { ...userEntity, userLink };
+  }
 }

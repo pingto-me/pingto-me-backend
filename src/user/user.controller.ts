@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Logger,
+  Param,
   Post,
   Query,
   Req,
@@ -47,5 +48,11 @@ export class UserController {
   @Get('me')
   async me(@Req() req: any) {
     return this.userService.getUserById(req.user.id);
+  }
+
+  @Auth()
+  @Get('referral/:refCode')
+  async getUserProfileByRefCode(@Param('refCode') refCode: string) {
+    return this.userService.getUserProfileByRefCode(refCode);
   }
 }

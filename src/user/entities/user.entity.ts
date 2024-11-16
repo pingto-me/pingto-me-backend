@@ -190,6 +190,6 @@ export class UserEntity extends BaseEntityModel implements User {
   })
   isSkipReference?: boolean;
 
-  ensName: string;
-  walletAddress: string;
+  ensName?: string;
+  walletAddress?: string;
 }
