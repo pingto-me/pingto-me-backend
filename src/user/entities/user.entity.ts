@@ -189,4 +189,6 @@ export class UserEntity extends BaseEntityModel implements User {
     example: true,
   })
   isSkipReference?: boolean;
+
+  ensName: string;
 }
