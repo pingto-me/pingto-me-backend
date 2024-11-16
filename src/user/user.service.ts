@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
@@ -14,7 +15,10 @@ import { SaveAccountRawDataDto } from './dto/save-account-raw-data.dto';
 import { WalletType } from 'src/utils/interface/wallet-type';
 import { UpdateUserProfile } from './dto/update-profile.dto';
 import { FirebaseService } from 'src/utils/firebase/firebase.service';
+import { BlockscoutService } from 'src/common/services/blockscout.service';
 
+const _ = require('lodash');
+const axios = require('axios');
 @Injectable()
 export class UserService {
   private userCollection = this.firebaseService
@@ -23,11 +27,12 @@ export class UserService {
 
   private userLinkCollection = this.firebaseService
     .getFirestore()
-    .collection('user-links');
+    .collection('user-linkes');
   constructor(
     private uuidService: UuidService,
     private dataService: DataService,
     private firebaseService: FirebaseService,
+    private blockscoutService: BlockscoutService,
   ) {}
 
   async getUserProfileCard(userId: string) {
@@ -196,6 +201,33 @@ export class UserService {
     await this.userCollection.doc(id).update({ ...body });
     const updatedUserSnapshot = await this.userCollection.doc(id).get();
     return updatedUserSnapshot.data();
+  }
+
+  async getMyNftList(userId: string, chain: string) {
+    const user = await this.getUserById(userId);
+    const walletAddress = user.providerData.walletAddress;
+    Logger.debug('walletAddress', walletAddress);
+    // const allowedChain = await _.find(chainWhitelist, { chain });
+    // Logger.debug('allowedChain', allowedChain);
+    // if (!allowedChain) {
+    //   throw new NotFoundException(`Chain not found`);
+    // }
+    // const compiled = _.template(allowedChain.apiUrl);
+    // const apiUrl = compiled({ address: walletAddress });
+    // Logger.debug('apiUrl', apiUrl);
+    // let result = [];
+    // try {
+    //   const response = await axios.get(apiUrl);
+    //   result = response.data;
+    // } catch (error) {
+    //   Logger.error('error', error);
+    //   throw new NotFoundException(`NFT not found`);
+    // }
+    const result = await this.blockscoutService.findNFTsByOwner(
+      chain,
+      walletAddress,
+    );
+    return result;
   }
 
   async getUserProfileByRefCode(refCode: string) {

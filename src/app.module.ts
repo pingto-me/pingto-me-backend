@@ -23,6 +23,7 @@ import { UserLinkModule } from './user-link/user-link.module';
 import { PublicController } from './public/public.controller';
 import { SocialPlatformProvider } from './common/provider/social-platform-provider';
 import { ENSService } from './common/services/ens-service.service';
+import { BlockscoutService } from './common/services/blockscout.service';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ENSService } from './common/services/ens-service.service';
     DataService,
     SocialPlatformProvider,
     ENSService,
+    BlockscoutService,
   ],
 })
 export class AppModule {}
