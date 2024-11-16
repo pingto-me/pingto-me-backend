@@ -22,6 +22,7 @@ import { OrderModule } from './order/order.module';
 import { UserLinkModule } from './user-link/user-link.module';
 import { PublicController } from './public/public.controller';
 import { SocialPlatformProvider } from './common/provider/social-platform-provider';
+import { ENSService } from './common/services/ens-service.service';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { SocialPlatformProvider } from './common/provider/social-platform-provid
     UserService,
     DataService,
     SocialPlatformProvider,
+    ENSService,
   ],
 })
 export class AppModule {}
