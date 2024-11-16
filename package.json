@@ -46,6 +46,7 @@
     "@nestjs/passport": "9.0.3",
     "@nestjs/platform-express": "9.3.10",
     "@nestjs/swagger": "6.2.1",
+    "@pushprotocol/restapi": "^1.7.29",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@ton/ton": "^15.1.0",
