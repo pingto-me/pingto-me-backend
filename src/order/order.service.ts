@@ -6,6 +6,8 @@ import { OrderEntity } from './entities/order.entity';
 import { CardService } from 'src/card/card.service';
 import { EventService } from 'src/event/event.service';
 import { PaymentStatus } from './entities/payment-status.enum';
+import { UuidService } from 'src/utils/uuid/uuid.service';
+import { CardTypeEnum } from 'src/card/types/card-type.enum';
 
 const logger = new Logger('OrderService');
 @Injectable()
@@ -15,13 +17,14 @@ export class OrderService {
     private readonly firebaseService: FirebaseService,
     private cardService: CardService,
     private eventService: EventService,
+    private uuidService: UuidService,
   ) {}
   async create(createOrderDto: CreateOrderDto) {
     // 1. get card entity
-    const cardEntity = await this.cardService.findOne(createOrderDto.cardId);
-    logger.log(`1. card entity ${cardEntity}`);
+    // const cardEntity = await this.cardService.findOne(createOrderDto.cardId);
+    // logger.log(`1. card entity ${cardEntity}`);
     // 2. get event entity
-    const eventEntity = await this.eventService.findOne(cardEntity.eventId);
+    const eventEntity = await this.eventService.findOne(createOrderDto.eventId);
     logger.log(`2. event entity ${eventEntity}`);
     // TODO: get convert usd to local currency
     const orderDoc = this.collection.doc();
@@ -32,9 +35,25 @@ export class OrderService {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-
+    logger.log(`userId  ${createOrderDto.userId}`);
+    // 3. create card entity
+    const code = await this.uuidService.makeCode(8);
+    const cardData = await this.cardService.create({
+      userId: createOrderDto.userId,
+      cardName: `${eventEntity.name} - ${createOrderDto.userId}`,
+      code,
+      cardType: CardTypeEnum.PROFILE,
+      eventId: eventEntity.id,
+      isRedeemed: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    logger.log(`3. card entity ${cardData}`);
     await orderDoc.set(orderData);
-    return orderData;
+    return {
+      order: orderData,
+      card: cardData,
+    };
   }
 
   async checkOrderPayment(orderId: string) {

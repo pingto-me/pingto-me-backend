@@ -3,7 +3,8 @@ import { ShippingType } from '../entities/shipping-type.enum';
 
 export class CreateOrderDto {
   userId: string;
-  cardId: string;
+  //cardId: string;
+  eventId: string;
 
   note?: string;
 

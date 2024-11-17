@@ -21,7 +21,8 @@ import { ApiTags } from '@nestjs/swagger';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
+  create(@User() user: UserEntity, @Body() createOrderDto: CreateOrderDto) {
+    createOrderDto.userId = user.id;
     return this.orderService.create(createOrderDto);
   }
 

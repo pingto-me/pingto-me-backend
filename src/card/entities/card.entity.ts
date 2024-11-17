@@ -1,3 +1,5 @@
+import { CardTypeEnum } from '../types/card-type.enum';
+
 // NFC card model
 export class Card {
   id: string;
@@ -6,6 +8,11 @@ export class Card {
   userId: string;
   eventId?: string;
   isRedeemed: boolean;
+
+  pinCode: string;
+  pingCount: number;
+
+  cardType: CardTypeEnum;
 
   createdAt?: Date;
   updatedAt?: Date;
