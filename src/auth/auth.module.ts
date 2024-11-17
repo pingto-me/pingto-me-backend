@@ -11,6 +11,7 @@ import { FirebaseService } from 'src/utils/firebase/firebase.service';
 import { UserService } from 'src/user/user.service';
 import { DataService } from 'src/utils/typesaurus/data.service';
 import { PaginationService } from 'src/utils/pagination/pagination.service';
+import { BlockscoutService } from 'src/common/services/blockscout.service';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { PaginationService } from 'src/utils/pagination/pagination.service';
     DataService,
 
     PaginationService,
+    BlockscoutService,
   ],
 })
 export class AuthModule {}

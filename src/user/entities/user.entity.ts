@@ -1,11 +1,11 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from 'src/models/gender.enum';
 import { Provider } from 'src/models/provider.enum';
 import { Role } from 'src/models/role.enum';
 import { User } from 'src/models/user.interface';
 import { ProviderDataEntity } from './provider-data.entity';
 import { BaseEntityModel } from 'src/common/models/base.entity.model';
-import { IsOptional } from 'class-validator';
+import { WalletType } from 'src/utils/interface/wallet-type';
 
 export class UserEntity extends BaseEntityModel implements User {
   @ApiProperty({
@@ -16,6 +16,7 @@ export class UserEntity extends BaseEntityModel implements User {
   })
   provider?: Provider;
 
+  walletType?: WalletType;
   @ApiProperty({
     type: String,
     description: 'Email',
@@ -82,11 +83,46 @@ export class UserEntity extends BaseEntityModel implements User {
 
   @ApiProperty({
     type: String,
+    description: 'Bio',
+    required: false,
+    example: 'Blockchain Developer',
+  })
+  bio?: string;
+
+  company?: string;
+  position?: string;
+
+  @ApiProperty({
+    type: String,
     description: 'Picture',
     required: false,
     example: 'http://xxx/xxx',
   })
   picture?: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Profile image',
+    required: false,
+    example: 'http://xxx/xxx',
+  })
+  profileImage?: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Banner image',
+    required: false,
+    example: 'http://xxx/xxx',
+  })
+  bannerImage?: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Uniq shorten',
+    required: false,
+    example: '123456',
+  })
+  uniqShorten?: string;
 
   @ApiProperty({
     type: String,
@@ -153,4 +189,7 @@ export class UserEntity extends BaseEntityModel implements User {
     example: true,
   })
   isSkipReference?: boolean;
+
+  ensName?: string;
+  walletAddress?: string;
 }

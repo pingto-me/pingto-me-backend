@@ -15,14 +15,28 @@ import { FirebaseService } from './utils/firebase/firebase.service';
 import { UserService } from './user/user.service';
 
 import { DataService } from './utils/typesaurus/data.service';
+import { CardModule } from './card/card.module';
+import { EventModule } from './event/event.module';
+import { CardTemplateModule } from './card-template/card-template.module';
+import { OrderModule } from './order/order.module';
+import { UserLinkModule } from './user-link/user-link.module';
+import { PublicController } from './public/public.controller';
+import { SocialPlatformProvider } from './common/provider/social-platform-provider';
+import { ENSService } from './common/services/ens-service.service';
+import { BlockscoutService } from './common/services/blockscout.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     AuthModule,
     UserModule,
+    CardModule,
+    EventModule,
+    CardTemplateModule,
+    OrderModule,
+    UserLinkModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController, PublicController],
   providers: [
     AppService,
     AuthService,
@@ -33,6 +47,9 @@ import { DataService } from './utils/typesaurus/data.service';
     FirebaseService,
     UserService,
     DataService,
+    SocialPlatformProvider,
+    ENSService,
+    BlockscoutService,
   ],
 })
 export class AppModule {}

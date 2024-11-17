@@ -6,7 +6,6 @@ import { AuthRespondInterface } from './dto/auth-respond.interface';
 import { ValidatePublicAddressInput } from './dto/validate-public-address.input';
 import { ValidatePublicAddressRespond } from './dto/validate-public-address.respond';
 import { SigninPublicAddressInput } from './dto/signin-public-address.input';
-import { SigninTonAddressInput } from './dto/signin-ton-address.input';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth')
@@ -38,16 +37,5 @@ export class AuthController {
   ): Promise<AuthRespondInterface> {
     const result = await this.authService.signinWithBypassPublicAddress(body);
     return result;
-  }
-
-  @Get('ton/proof')
-  async getTonProof() {
-    return await this.authService.getTonProof();
-  }
-
-  @Post('ton/signin')
-  async signinWithTonWalletAddress(@Body() body: SigninTonAddressInput) {
-    const { account, proof } = body;
-    return await this.authService.signinWithTonWalletAddress(proof, account);
   }
 }

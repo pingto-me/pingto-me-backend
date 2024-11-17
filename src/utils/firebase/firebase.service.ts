@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import {
   getStorage,
@@ -38,7 +38,7 @@ export class FirebaseService {
     } as FirebaseOptions;
     const app = initializeApp(firebaseConfig);
     this.firebaseAuth = getAuth(app);
-
+    Logger.log('Firebase initialized', 'FirebaseService');
     this.storage = getStorage(app);
   }
 

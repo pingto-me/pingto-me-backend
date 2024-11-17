@@ -14,11 +14,14 @@ export interface User {
   gender?: Gender;
   age?: number;
   picture?: string;
+  profileImage?: string;
+  bannerImage?: string;
   role: Role;
   isInitProfile?: boolean;
   referralCode?: string;
   point?: number;
   isSkipReference?: boolean;
+  uniqShorten?: string;
 
   createdAt?: Date;
   updatedAt?: Date;

@@ -2,6 +2,7 @@
 import { BaseEntityModel } from 'src/common/models/base.entity.model';
 import { ProviderData } from 'src/models/provider-data';
 import { Provider } from 'src/models/provider.enum';
+import { WalletType } from 'src/utils/interface/wallet-type';
 
 export class ProviderDataEntity
   extends BaseEntityModel
@@ -10,6 +11,7 @@ export class ProviderDataEntity
   userId: string;
   uid?: string;
   provider: Provider;
+  walletType: WalletType;
   email?: string;
   forgetPasswordCode?: string;
   providerId?: string;

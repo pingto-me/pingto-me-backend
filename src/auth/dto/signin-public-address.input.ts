@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { WalletType } from 'src/utils/interface/wallet-type';
 
 export class SigninPublicAddressInput {
   @ApiProperty({
@@ -19,4 +20,13 @@ export class SigninPublicAddressInput {
   })
   @IsNotEmpty()
   signature: string;
+
+  @ApiProperty({
+    enum: WalletType,
+    description: 'walletType',
+    required: true,
+    example: 'bitkubnext',
+  })
+  @IsOptional()
+  walletType: WalletType;
 }

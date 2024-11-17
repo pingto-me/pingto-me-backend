@@ -18,7 +18,7 @@ import * as admin from 'firebase-admin';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const corsHandler = cors({ origin: true });
 
-if (process.env.FIREBASE_ENABLE == 'true') {
+if (process.env.FIREBASEX_ENABLE == 'true') {
   const serviceAccount = {
     type: 'service_account',
     project_id: process.env.FIREBASEADMIN_PROJECT_ID,
@@ -52,12 +52,12 @@ export const createNestServer = async (expressInstance: express.Express) => {
   );
   app.useBodyParser('json', { limit: '50mb' });
   // Validation
-  app.useGlobalPipes(
+  /* app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
     }),
-  );
+  );*/
 
   const configService = app.get(ConfigService);
   const nestConfig = configService.get<NestConfig>('nest');
